@@ -1,3 +1,9 @@
+<?php
+  require_once 'routes.php';
+
+  runRoutes();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +19,7 @@
 </head>
 <body>
     <main>
-        <div class="container mt-5">
+        <div class="container mt-5 mb-5">
             <div class="col-12">
                 <form id="userForm">
                     <div class="form-group">
@@ -44,9 +50,10 @@
                 <table class="table" id="usersTable">
                     <thead>
                         <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Position</th>
+                          <th>ID</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Position</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,6 +63,8 @@
             </div>
         </div>
     </main>
-    <script src="script.js"></script>
+    <script src="views/script.js"></script>
 </body>
 </html>
+
+
