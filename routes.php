@@ -61,7 +61,6 @@ function runRoutes() {
     $uri = $_SERVER['REQUEST_URI'];
     $method = $_SERVER['REQUEST_METHOD'];
     parse_str(file_get_contents('php://input'), $params);
-    // $params = explode('&', file_get_contents('php://input'));
     $found = false;
 
     foreach ($routes as $path => $callback) {
