@@ -1,7 +1,7 @@
 let users = [];
 let positions = [];
 
-
+// Get all users from the database
 function getAllUsers() {
     return $.ajax({
         type: 'GET',
@@ -17,6 +17,7 @@ function getAllUsers() {
     });
 }
 
+// Get all positions from the database
 function getAllPositions() {
     return $.ajax({
         type: 'GET',
@@ -36,6 +37,7 @@ function getAllPositions() {
     });
 }
 
+// Render users on the table
 function renderUsers(users, positions) {
     let usersTable = $('#usersTable tbody');
     usersTable.empty();
@@ -64,12 +66,14 @@ function renderUsers(users, positions) {
     });
 }
 
+// Call function getAllUsers() and after call renderUsers()
 function getAndRenderUsers() {
     $.when(getAllUsers()).done(function() {
         renderUsers(users, positions);
     });
 }
 
+// Render positions on the forms
 function renderPositions(positions) {
     let options = "";
 
@@ -81,6 +85,7 @@ function renderPositions(positions) {
     $("#editPosition").html(options);
 }
 
+// Add user function
 function addUser() {
     let name = $("#firstName").val();
     let surname = $("#lastName").val();
@@ -117,6 +122,7 @@ function addUser() {
     });
 }
 
+// Delete user function
 function deleteUser(id) {
     if (confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
         $.ajax({
@@ -133,20 +139,21 @@ function deleteUser(id) {
     }
 }
 
+// Return needed object of user from users variable
 function findUserById(id) {
     let user = $.grep(users, function(e){ return e.id == id; });
 
     if(user.length > 0) {
-      return user[0];
+        return user[0];
     }
     else {
-      alert("User not found with provided ID.");
+        alert("User not found with provided ID.");
 
-      return false;
+        return false;
     }
-  }
+}
   
-
+// Show edit user modal and render data of selected user on fileds
 function openEditUserModal(id) {
     if (!findUserById(id)) return;
     let currentUserData = findUserById(id);
@@ -159,6 +166,7 @@ function openEditUserModal(id) {
     $('#editUserBtn').attr('onclick','editUser(' + id + ')');
 }
 
+// Edit user
 function editUser(id) {
     if (!findUserById(id)) return;
     let currentUserData = findUserById(id);

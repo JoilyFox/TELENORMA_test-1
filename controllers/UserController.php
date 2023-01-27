@@ -4,17 +4,22 @@ class UserController {
 
     /**
      * User model variable
+     * 
      * @var mixed
      */
     protected $user;
 
+    /**
+     * Constructor function to instantiate the User model
+     */
     public function __construct() {
         $this->user = new User();
     }
     
     /**
-     * Summary of getUsers
-     * @return string
+     * Get all users
+     * 
+     * @return string Returns a JSON encoded string of all users
      */
     public function getUsers() : String {
         try {
@@ -30,9 +35,10 @@ class UserController {
     }
 
     /**
-     * Summary of addUser
-     * @param array $data
-     * @return array
+     * Add a new user
+     * 
+     * @param array $data Array of data to create
+     * @return string Returns status of add operation
      */
     public function addUser(array $data) : String {
         try {
@@ -47,9 +53,10 @@ class UserController {
     }
 
     /**
-     * Summary of deleteUser
-     * @param int $id
-     * @return string
+     * Delete a user
+     * 
+     * @param int $id ID of user to delete
+     * @return string Returns status of delete operation
      */
     public function deleteUser(array $params) : String {
         try {
@@ -63,6 +70,12 @@ class UserController {
         }
     }
 
+    /**
+     * Edit a user
+     * 
+     * @param array $params Array of data to update
+     * @return string Returns status of update operation
+     */
     public function editUser(array $params) : String {
         try {
             $responce = $this->user->update($params['id'], [   

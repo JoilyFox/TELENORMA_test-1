@@ -1,23 +1,34 @@
 <?php require_once __DIR__.'/../configs/Database.php';
 
 class Model {
+
+    /**
+    * @var Database $db The database connection instance
+    * @var string $tableName The name of the table to interact with
+    * @var array $columns The columns of the table
+    */
     protected $db;
     protected $tableName;
     protected $columns;
 
+    /**
+     * Getting instance of the Database class
+     */
     public function __construct() {
         $this->db = Database::getInstance();
     }
 
     /**
-     * Getting all db columns.
-     * @return array
+     * Get all the records from the table
+     * 
+     * @return array Returns an array of rows from the table
      */
     public function all() : Array {
+        $connection = $this->db->getConnection();
+
         $columns = implode(', ', $this->columns);
 
         try {
-            $connection = $this->db->getConnection();
             $stmt = $connection->prepare("SELECT " . $columns . " FROM " . $this->tableName);
             $stmt->execute();
             $results = $stmt->fetchAll();
@@ -31,14 +42,17 @@ class Model {
     }
 
     /**
-     * Create method.
-     * @param array $data
-     * @return string
+     * Method to create a new record in the database
+     * 
+     * @param array $data  Array of data to create
+     * @return string A message indicating the success or failure of the operation
      */
     public function create(array $data) : String {
         // Validation
-        if (empty($data['name']) || empty($data['surname']) || empty($data['position_id'])) {
-            return 'Error: name, surname and position_id are required fields.';
+        foreach($data as $val){
+            if (empty($val) || $val === null) {
+                return 'Error: All fields are required.';
+            }
         }
 
         $connection = $this->db->getConnection();
@@ -61,6 +75,12 @@ class Model {
         }
     }
 
+    /**
+     * Method for deleting a record from the database
+     * 
+     * @param int $id The id of the record to be deleted
+     * @return string A message indicating the success or failure of the operation
+    */
     public function delete(int $id) : String {
         $connection = $this->db->getConnection();
         
@@ -76,6 +96,13 @@ class Model {
         }
     }
 
+    /**
+     * Method to update an existing record in the database
+     * 
+     * @param int $id The id of the record to be deleted
+     * @param array $data The data to update the record with. All fields are required.
+     * @return string A message indicating the success or failure of the operation
+    */
     public function update(int $id, array $data) : String {
         // Validation
         foreach($data as $val){
@@ -85,7 +112,7 @@ class Model {
         }
 
         $connection = $this->db->getConnection();
-        
+
         $set ='';
         foreach($data as $key=>$val){
             $set .= $key."='".$val."',";
