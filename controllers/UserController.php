@@ -1,6 +1,16 @@
 <?php require_once __DIR__.'/../models/User.php';
 
 class UserController {
+
+    /**
+     * User model variable
+     * @var mixed
+     */
+    protected $user;
+
+    public function __construct() {
+        $this->user = new User();
+    }
     
     /**
      * Summary of getUsers
@@ -8,8 +18,7 @@ class UserController {
      */
     public function getUsers() : String {
         try {
-            $users = new User();
-            $data = $users->all();
+            $data = $this->user->all();
             header('Content-Type: application/json');
 
             return json_encode($data);
@@ -25,13 +34,48 @@ class UserController {
      * @param array $data
      * @return array
      */
-    public function addUser(array $data) : Array {
+    public function addUser(array $data) : String {
         try {
-            $users = new User();
-            $users->create($data);
+            $responce = $this->user->create($data);
+
+            return $responce;
         } catch (PDOException $e) {
             error_log($e->getMessage());
-            return ['error' => $e->getMessage()];
+
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * Summary of deleteUser
+     * @param int $id
+     * @return string
+     */
+    public function deleteUser(array $params) : String {
+        try {
+            $responce = $this->user->delete($params['id']);
+    
+            return $responce;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+    
+            return $e->getMessage();
+        }
+    }
+
+    public function editUser(array $params) : String {
+        try {
+            $responce = $this->user->update($params['id'], [   
+                    'name' => $params['name'], 
+                    'surname' => $params['surname'], 
+                    'position_id' => $params['position_id']
+                ]);
+    
+            return $responce;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+    
+            return $e->getMessage();
         }
     }
 }

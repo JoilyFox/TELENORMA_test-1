@@ -3,6 +3,9 @@ require_once 'controllers/UserController.php';
 require_once 'controllers/PositionController.php';
 
 $routes = [];
+$userController = new UserController();
+
+// Routes
 
 route('/', function () {
     return null;
@@ -12,10 +15,9 @@ route('/404', function () {
     echo "Page not found";
 });
 
-route('/get-users', function () {
-    $userController = new UserController();
-
+route('/get-users', function () use ($userController) {
     echo $userController->getUsers();
+
     die;
 });
 
@@ -26,45 +28,40 @@ route('/get-positions', function () {
     die;
 });
 
-route('/add-user', function ($params) {
-    printf($params);
-    // $userController = new UserController();
+route('/add-user', function ($params) use ($userController) {
+    echo $userController->addUser($params);
 
-    // echo $userController->getUsers();
     die;
 });
 
+route('/delete-user', function ($params) use ($userController) {
+    echo $userController->deleteUser($params);
+
+    die;
+});
+
+route('/edit-user', function ($params) use ($userController) {
+    echo $userController->editUser($params);
+
+    die;
+});
+
+
+
+// Router logic
 
 function route(string $path, callable $callback) {
     global $routes;
     $routes[$path] = $callback;
 }
 
-// function runRoutes() {
-//     global $routes;
-//     $uri = $_SERVER['REQUEST_URI'];
-//     $found = false;
-
-//     foreach ($routes as $path => $callback) {
-//         if ($path !== $uri) continue;
-
-//         $found = true;
-//         $callback();
-
-//     }
-
-//     if (!$found) {
-//         $notFoundCallback = $routes['/404'];
-//         $notFoundCallback();
-//     }
-// }
-
 function runRoutes() {
     global $routes;
 
     $uri = $_SERVER['REQUEST_URI'];
     $method = $_SERVER['REQUEST_METHOD'];
-    $params = json_decode(file_get_contents('php://input'), true);
+    parse_str(file_get_contents('php://input'), $params);
+    // $params = explode('&', file_get_contents('php://input'));
     $found = false;
 
     foreach ($routes as $path => $callback) {
@@ -72,7 +69,7 @@ function runRoutes() {
 
         $found = true;
 
-        if ($method === 'POST') {
+        if ($method === 'POST' || $method === 'DELETE' || $method === 'PUT') {
             $callback($params);
         } else {
             $callback();
