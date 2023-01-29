@@ -1,12 +1,9 @@
 # Test task for Telenorma AG №1
 
-The task is: 
+<b>The task is: </b>
 </br>
-<i>
-Создать форму редактирования пользователей с полями Имя (input), 
-Фамилия (input), должность (select с выбором "программист", "менеджер", «тестировщик").
-Под ней разместить таблицу с сохраненными пользователями.
-Реализовать возможность добавлять/редактировать/удалять пользователей.
-Подгрузка данных для редактирования, обновление таблицы после каких-либо действий - ajax.
-Верстка особо не интересует, можно на неё не тратить время.
-</i>
+Create a user editing form with fields for Name (input), Last Name (input), and Position (select with options "Programmer", "Manager", "Tester").
+Place a table of saved users below it.
+Implement the ability to add/edit/delete users.
+Data for editing should be loaded and the table should be updated after any actions with the help of ajax.
+Don't have to worry about layout, you can save time on it.
