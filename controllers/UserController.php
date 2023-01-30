@@ -1,6 +1,7 @@
 <?php require_once __DIR__.'/../models/User.php';
 
-class UserController {
+class UserController 
+{
 
     /**
      * User model variable
@@ -12,7 +13,8 @@ class UserController {
     /**
      * Constructor function to instantiate the User model
      */
-    public function __construct() {
+    public function __construct() 
+    {
         $this->user = new User();
     }
     
@@ -21,13 +23,16 @@ class UserController {
      * 
      * @return string Returns a JSON encoded string of all users
      */
-    public function getUsers() : String {
-        try {
+    public function getUsers() : String 
+    {
+        try 
+        {
             $data = $this->user->all();
             header('Content-Type: application/json');
 
             return json_encode($data);
-        } catch (PDOException $e) {
+        } catch (PDOException $e) 
+        {
             error_log($e->getMessage());
 
             return ['error' => $e->getMessage()];
@@ -40,12 +45,15 @@ class UserController {
      * @param array $data Array of data to create
      * @return string Returns status of add operation
      */
-    public function addUser(array $data) : String {
-        try {
+    public function addUser(array $data) : String 
+    {
+        try 
+        {
             $responce = $this->user->create($data);
 
             return $responce;
-        } catch (PDOException $e) {
+        } catch (PDOException $e) 
+        {
             error_log($e->getMessage());
 
             return $e->getMessage();
@@ -58,12 +66,15 @@ class UserController {
      * @param int $id ID of user to delete
      * @return string Returns status of delete operation
      */
-    public function deleteUser(array $params) : String {
-        try {
+    public function deleteUser(array $params) : String 
+    {
+        try 
+        {
             $responce = $this->user->delete($params['id']);
     
             return $responce;
-        } catch (PDOException $e) {
+        } catch (PDOException $e) 
+        {
             error_log($e->getMessage());
     
             return $e->getMessage();
@@ -76,8 +87,10 @@ class UserController {
      * @param array $params Array of data to update
      * @return string Returns status of update operation
      */
-    public function editUser(array $params) : String {
-        try {
+    public function editUser(array $params) : String 
+    {
+        try 
+        {
             $responce = $this->user->update($params['id'], [   
                     'name' => $params['name'], 
                     'surname' => $params['surname'], 
@@ -85,7 +98,8 @@ class UserController {
                 ]);
     
             return $responce;
-        } catch (PDOException $e) {
+        } catch (PDOException $e) 
+        {
             error_log($e->getMessage());
     
             return $e->getMessage();

@@ -1,6 +1,7 @@
 <?php require_once 'Model.php';
 
-class User extends Model {
+class User extends Model 
+{
 
     /**
      * The name of the table to interact with
@@ -24,7 +25,8 @@ class User extends Model {
     /**
      * Constructor for the class
      */
-    public function __construct() {
+    public function __construct() 
+    {
         parent::__construct();
     }
     

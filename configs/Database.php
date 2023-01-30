@@ -1,6 +1,7 @@
 <?php
 
-class Database {
+class Database 
+{
 
     /**
      * The instance of the Database class
@@ -32,8 +33,10 @@ class Database {
     /**
      * Connect to the database
      */
-    private function __construct() {
-        try {
+    private function __construct() 
+    {
+        try 
+        {
             $this->connection = new PDO("mysql:host=" . self::DB_HOST . ";dbname=" . self::DB_NAME, self::DB_USER, self::DB_PASS);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
@@ -47,8 +50,10 @@ class Database {
      * 
      * @return Database
      */
-    public static function getInstance() : Database {
-        if (!self::$instance) {
+    public static function getInstance() : Database 
+    {
+        if (!self::$instance) 
+        {
             self::$instance = new Database();
         }
         
@@ -60,7 +65,8 @@ class Database {
      * 
      * @return PDO
      */ 
-    public function getConnection() : PDO {
+    public function getConnection() : PDO 
+    {
         return $this->connection;
     }
 }

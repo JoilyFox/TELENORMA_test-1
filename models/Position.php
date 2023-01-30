@@ -1,6 +1,7 @@
 <?php require_once 'Model.php';
 
-class Position extends Model {
+class Position extends Model 
+{
 
     /**
      * The name of the table to interact with
@@ -22,7 +23,8 @@ class Position extends Model {
     /**
      * Constructor for the class
      */
-    public function __construct() {
+    public function __construct() 
+    {
         parent::__construct();
     }
     

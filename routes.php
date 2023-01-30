@@ -7,40 +7,47 @@ $userController = new UserController();
 
 // Routes
 
-route('/', function () {
+route('/', function () 
+{
     return null;
 });
 
-route('/404', function () {
+route('/404', function () 
+{
     echo "Page not found";
 });
 
-route('/get-users', function () use ($userController) {
+route('/get-users', function () use ($userController) 
+{
     echo $userController->getUsers();
 
     die;
 });
 
-route('/get-positions', function () {
+route('/get-positions', function () 
+{
     $positionController = new PositionController();
 
     echo $positionController->getPositions();
     die;
 });
 
-route('/add-user', function ($params) use ($userController) {
+route('/add-user', function ($params) use ($userController) 
+{
     echo $userController->addUser($params);
 
     die;
 });
 
-route('/delete-user', function ($params) use ($userController) {
+route('/delete-user', function ($params) use ($userController) 
+{
     echo $userController->deleteUser($params);
 
     die;
 });
 
-route('/edit-user', function ($params) use ($userController) {
+route('/edit-user', function ($params) use ($userController) 
+{
     echo $userController->editUser($params);
 
     die;
@@ -50,12 +57,14 @@ route('/edit-user', function ($params) use ($userController) {
 
 // Router logic
 
-function route(string $path, callable $callback) {
+function route(string $path, callable $callback) 
+{
     global $routes;
     $routes[$path] = $callback;
 }
 
-function runRoutes() {
+function runRoutes() 
+{
     global $routes;
 
     $uri = $_SERVER['REQUEST_URI'];
@@ -63,19 +72,22 @@ function runRoutes() {
     parse_str(file_get_contents('php://input'), $params);
     $found = false;
 
-    foreach ($routes as $path => $callback) {
+    foreach ($routes as $path => $callback) 
+    {
         if ($path !== $uri) continue;
 
         $found = true;
 
-        if ($method === 'POST' || $method === 'DELETE' || $method === 'PUT') {
+        if ($method === 'POST' || $method === 'DELETE' || $method === 'PUT') 
+        {
             $callback($params);
         } else {
             $callback();
         }
     }
 
-    if (!$found) {
+    if (!$found) 
+    {
         $notFoundCallback = $routes['/404'];
         $notFoundCallback();
     }
